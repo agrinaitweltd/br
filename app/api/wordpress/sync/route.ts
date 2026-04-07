@@ -1,15 +1,10 @@
 import { NextResponse } from "next/server"
-import { revalidatePath } from "next/cache"
 
-// WordPress webhook endpoint for content synchronization
-export async function POST(request: Request) {
-  try {
-    const body = await request.json()
-    const { action, post_type, post_id } = body
+export const dynamic = 'force-dynamic'
 
-    // Verify webhook secret for security
-    const webhookSecret = request.headers.get("x-webhook-secret")
-    if (webhookSecret !== process.env.WORDPRESS_WEBHOOK_SECRET) {
+export async function POST() {
+  return NextResponse.json({ error: "Service not available" }, { status: 503 })
+}
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 

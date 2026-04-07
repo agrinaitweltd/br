@@ -1,12 +1,14 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { stripe } from "@/lib/stripe"
-import { Resend } from "resend"
+import { NextResponse } from "next/server"
 
 export const dynamic = 'force-dynamic'
 
-export async function POST(request: NextRequest) {
-  const resend = new Resend(process.env.RESEND_API_KEY)
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+export async function POST() {
+  return NextResponse.json({ error: "Service not available" }, { status: 503 })
+}
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+  if (!stripe || !webhookSecret) {
+    return NextResponse.json({ error: "Payments not configured" }, { status: 503 })
+  }
   try {
     const body = await request.text()
     const signature = request.headers.get("stripe-signature")!
@@ -41,6 +43,7 @@ export async function POST(request: NextRequest) {
 }
 
 async function handlePaymentSuccess(paymentIntent: any) {
+  if (!stripe || !resend) return
   const { metadata, amount, customer } = paymentIntent
 
   // Get customer details
@@ -120,6 +123,7 @@ async function handlePaymentSuccess(paymentIntent: any) {
 }
 
 async function handlePaymentFailure(paymentIntent: any) {
+  if (!stripe || !resend) return
   const { metadata, customer } = paymentIntent
   const customerDetails = await stripe.customers.retrieve(customer)
 

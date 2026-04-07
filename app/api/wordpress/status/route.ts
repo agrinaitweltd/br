@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server"
 
-export async function GET() {
-  try {
-    const wordpressUrl = process.env.WORDPRESS_API_URL
+export const dynamic = 'force-dynamic'
 
-    if (!wordpressUrl) {
+export async function GET() {
+  return NextResponse.json({ error: "Service not available" }, { status: 503 })
+}
       return NextResponse.json(
         {
           status: "error",

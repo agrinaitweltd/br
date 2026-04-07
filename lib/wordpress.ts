@@ -1,5 +1,5 @@
 // WordPress API integration utilities
-const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || "https://your-wordpress-site.com/wp-json/wp/v2"
+const WORDPRESS_API_URL = "https://your-wordpress-site.com/wp-json/wp/v2"
 
 export interface WordPressPost {
   id: number
@@ -181,7 +181,6 @@ export async function submitToWordPress(endpoint: string, data: any): Promise<bo
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.WORDPRESS_API_TOKEN}`, // If using JWT auth
       },
       body: JSON.stringify(data),
     })

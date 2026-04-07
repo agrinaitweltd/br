@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server"
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
-  // Google Search Console verification
-  const verificationContent = `google-site-verification: google${process.env.GOOGLE_SEARCH_CONSOLE_ID}.html`
+  return NextResponse.json({ error: "Service not available" }, { status: 503 })
+}
 
   return new NextResponse(verificationContent, {
     headers: {

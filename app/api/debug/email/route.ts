@@ -1,9 +1,10 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { Resend } from "resend"
+import { NextResponse } from "next/server"
 
-export async function GET(request: NextRequest) {
-  try {
-    const resendApiKey = process.env.RESEND_API_KEY
+export const dynamic = 'force-dynamic'
+
+export async function GET() {
+  return NextResponse.json({ error: "Service not available" }, { status: 503 })
+}
     const resend = resendApiKey ? new Resend(resendApiKey) : null
 
     if (!resend) {

@@ -1,10 +1,10 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { stripe, calculateServicePrice } from "@/lib/stripe"
+import { NextResponse } from "next/server"
 
-export async function POST(request: NextRequest) {
-  try {
-    // Check if Stripe is initialized
-    if (!stripe) {
+export const dynamic = 'force-dynamic'
+
+export async function POST() {
+  return NextResponse.json({ error: "Service not available" }, { status: 503 })
+}
       return NextResponse.json(
         { error: "Payment processing is not configured. Please contact support." },
         { status: 503 }

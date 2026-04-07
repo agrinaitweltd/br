@@ -1,16 +1,41 @@
 "use client"
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { loadStripe } from "@stripe/stripe-js"
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { formatPrice } from "@/lib/client-utils"
-import { CreditCard, Lock, Shield } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+interface PaymentFormProps {
+  serviceType: string
+  serviceSize: string
+  additionalServices: string[]
+  helpers?: number
+  hours?: number
+  customerDetails: {
+    name: string
+    email: string
+    phone: string
+    moveDate?: string
+    fromAddress?: string
+    toAddress?: string
+  }
+  amount: number
+  onSuccess: (paymentIntentId: string) => void
+  onError: (error: string) => void
+}
+
+export default function PaymentForm({ customerDetails }: PaymentFormProps) {
+  return (
+    <Card className="w-full max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle>Contact Us to Pay</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">
+          Please call us on <strong>07398 395022</strong> or email{" "}
+          <strong>contactus@breezyeemoves.co.uk</strong> to complete your booking and payment.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
 
 interface PaymentFormProps {
   serviceType: string
