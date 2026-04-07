@@ -1,5 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server"
+﻿import { type NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
+
+export const dynamic = 'force-dynamic'
 
 // Check if Resend API key is configured
 const resendApiKey = process.env.RESEND_API_KEY

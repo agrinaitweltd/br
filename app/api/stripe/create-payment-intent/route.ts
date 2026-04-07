@@ -1,10 +1,12 @@
-import { NextResponse } from "next/server"
+﻿import { type NextRequest, NextResponse } from "next/server"
+import { stripe, calculateServicePrice } from "@/lib/stripe"
 
 export const dynamic = 'force-dynamic'
 
-export async function POST() {
-  return NextResponse.json({ error: "Service not available" }, { status: 503 })
-}
+export async function POST(request: NextRequest) {
+  try {
+    // Check if Stripe is initialized
+    if (!stripe) {
       return NextResponse.json(
         { error: "Payment processing is not configured. Please contact support." },
         { status: 503 }
@@ -30,7 +32,7 @@ export async function POST() {
     const amount = calculateServicePrice(serviceType, serviceSize, additionalServices, helpers, hours)
 
     if (amount < 50) {
-      return NextResponse.json({ error: "Minimum payment amount is £0.50" }, { status: 400 })
+      return NextResponse.json({ error: "Minimum payment amount is Â£0.50" }, { status: 400 })
     }
 
     // Create or retrieve customer

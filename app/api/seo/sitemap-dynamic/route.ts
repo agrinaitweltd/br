@@ -1,5 +1,7 @@
-import { NextResponse } from "next/server"
+﻿import { NextResponse } from "next/server"
 import { fetchWordPressPosts } from "@/lib/wordpress"
+
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
   try {

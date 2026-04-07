@@ -1,10 +1,12 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
+import { stripe } from "@/lib/stripe"
+import { Resend } from "resend"
 
 export const dynamic = 'force-dynamic'
 
-export async function POST() {
-  return NextResponse.json({ error: "Service not available" }, { status: 503 })
-}
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
+
+export async function POST(request: NextRequest) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
   if (!stripe || !webhookSecret) {
     return NextResponse.json({ error: "Payments not configured" }, { status: 503 })

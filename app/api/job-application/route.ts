@@ -1,10 +1,13 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
+import { Resend } from "resend"
 
 export const dynamic = 'force-dynamic'
 
-export async function POST() {
-  return NextResponse.json({ error: "Service not available" }, { status: 503 })
-}
+export async function POST(request: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  try {
+    const body = await request.json()
+    const { name, email, phone, age, location, experience, availability, transport, motivation, references } = body
 
     // Validate required fields
     if (!name || !email || !phone || !age || !location || !availability || !transport || !motivation) {

@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server"
+﻿import { type NextRequest, NextResponse } from "next/server"
+import { Resend } from "resend"
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
-  return NextResponse.json({ error: "Service not available" }, { status: 503 })
-}
+export async function GET(request: NextRequest) {
+  try {
+    const resendApiKey = process.env.RESEND_API_KEY
     const resend = resendApiKey ? new Resend(resendApiKey) : null
 
     if (!resend) {
@@ -37,19 +38,19 @@ export async function GET() {
             <div style="background: #f0f8ff; padding: 15px; border-left: 4px solid #40E0D0; margin: 20px 0;">
               <h3 style="margin-top: 0; color: #333;">If you receive this email:</h3>
               <ul style="margin-bottom: 0;">
-                <li>✅ Resend API key is working</li>
-                <li>✅ Domain authentication is working</li>
-                <li>✅ Email sending is functional</li>
+                <li>âœ… Resend API key is working</li>
+                <li>âœ… Domain authentication is working</li>
+                <li>âœ… Email sending is functional</li>
               </ul>
             </div>
             
             <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #9B59B6; margin: 20px 0;">
               <h3 style="margin-top: 0; color: #333;">If you don't receive this email:</h3>
               <ul style="margin-bottom: 0;">
-                <li>❌ Check your spam folder</li>
-                <li>❌ Verify domain DNS records</li>
-                <li>❌ Check Resend dashboard for errors</li>
-                <li>❌ Verify API key is correct</li>
+                <li>âŒ Check your spam folder</li>
+                <li>âŒ Verify domain DNS records</li>
+                <li>âŒ Check Resend dashboard for errors</li>
+                <li>âŒ Verify API key is correct</li>
               </ul>
             </div>
             
