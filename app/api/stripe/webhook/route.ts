@@ -2,10 +2,11 @@ import { type NextRequest, NextResponse } from "next/server"
 import { stripe } from "@/lib/stripe"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
   try {
     const body = await request.text()
     const signature = request.headers.get("stripe-signature")!
